@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>লগইন - JLPT শিখুন</title>
+    <style>
+        /* Google Fonts import korchi */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;700&display=swap');
+
+        /* Shob element er jonno basic styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans Bengali', sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            display: grid;
+            place-items: center;
+            min-height: 100vh;
+        }
+
+        /* Login Container */
+        .login-container {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+        }
+        
+        .login-container .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #333;
+            text-decoration: none;
+            margin-bottom: 10px;
+        }
+
+        .login-container h2 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .login-container p {
+            color: #777;
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-family: 'Noto Sans Bengali', sans-serif;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #007BFF;
+        }
+
+        .options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .options a {
+            color: #007BFF;
+            text-decoration: none;
+        }
+
+        .submit-btn {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+        
+        .submit-btn:hover {
+            background-color: #0056b3;
+        }
+        
+        .signup-link {
+            margin-top: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .signup-link a {
+            color: #007BFF;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        
+        #error-message {
+            color: red;
+            margin-top: 15px;
+            display: none;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <a href="index.html" class="logo">JLPT শিখুন</a>
+        <h2>আপনার অ্যাকাউন্টে লগইন করুন</h2>
+        <p>অনুগ্রহ করে আপনার তথ্য দিন</p>
+        
+        <form id="login-form">
+            <div class="form-group">
+                <label for="email">ইমেইল</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">পাসওয়ার্ড</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="options">
+                <label><input type="checkbox"> আমাকে মনে রাখুন</label>
+                <a href="#">পাসওয়ার্ড ভুলে গেছেন?</a>
+            </div>
+            <button type="submit" class="submit-btn">লগইন</button>
+            <p id="error-message">আপনার ইমেইল অথবা পাসওয়ার্ড ভুল।</p>
+        </form>
+
+        <div class="signup-link">
+            আপনার কোনো অ্যাকাউন্ট নেই? <a href="#">একাউন্ট খুলুন</a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('login-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Stop form from submitting normally
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const errorMessage = document.getElementById('error-message');
+
+            // --- Admin Login ---
+            // এখানে আপনার অ্যাডমিন ইমেইল ও পাসওয়ার্ড দিন
+            const adminEmail = "admin@jlpt.com";
+            const adminPass = "admin123";
+
+            // --- Regular User Login ---
+            // এখানে সাধারণ ব্যবহারকারীর ইমেইল ও পাসওয়ার্ড দিন
+            const userEmail = "user@jlpt.com";
+            const userPass = "user123";
+
+            if (email === adminEmail && password === adminPass) {
+                // Redirect to admin dashboard
+                window.location.href = 'admin/dashboard.html';
+            } else if (email === userEmail && password === userPass) {
+                // Redirect to user dashboard
+                window.location.href = 'user/user-dashboard.html';
+            } else {
+                // Show error message
+                errorMessage.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JLPT শিখুন - জাপানি ভাষা শেখার সেরা প্ল্যাটফর্ম</title>
+    <style>
+        /* Google Fonts import korchi */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;700&display=swap');
+
+        /* Shob element er jonno basic styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans Bengali', sans-serif;
+            background-color: #ffffff;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Header er style */
+        .header {
+            background-color: #fff;
+            padding: 0 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo a {
+            text-decoration: none;
+            color: #333;
+            font-size: 24px;
+            font-weight: bold;
+            padding: 15px 0;
+        }
+
+        .nav-menu ul {
+            list-style: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-menu ul li a {
+            display: block;
+            color: #333;
+            text-decoration: none;
+            padding: 25px 18px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-menu ul li a:hover {
+            color: #007BFF;
+        }
+        
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+
+        .hamburger .bar {
+            display: block;
+            width: 25px;
+            height: 3px;
+            margin: 5px auto;
+            background-color: #333;
+            transition: all 0.3s ease-in-out;
+        }
+        
+        /* Hero Section */
+        .hero-section {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://placehold.co/1920x1080/34495E/FFFFFF?text=JLPT+Learn');
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+            text-align: center;
+            padding: 120px 20px;
+        }
+
+        .hero-section h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .hero-section p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-btn {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        
+        .hero-btn:hover {
+            background-color: #0056b3;
+            transform: translateY(-3px);
+        }
+
+        /* Home Sections */
+        .home-section {
+            padding: 60px 5%;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            color: #333;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            width: 80px;
+            height: 4px;
+            background-color: #007BFF;
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        /* Grid for cards */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        /* Card Style (Blog, Book, Course) */
+        .card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.12);
+        }
+
+        .card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-content h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+        }
+
+        .card-content p {
+            color: #555;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .card-btn {
+            display: inline-block;
+            background-color: #007BFF;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+            align-self: flex-start;
+        }
+
+        .card-btn:hover {
+            background-color: #0056b3;
+        }
+        
+        .see-all-link {
+            display: block;
+            text-align: center;
+            margin-top: 40px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #007BFF;
+            text-decoration: none;
+        }
+        
+        .see-all-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer Styling */
+        .footer {
+            background-color: #222;
+            color: #ddd;
+            padding: 50px 5%;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            text-align: center;
+        }
+        
+        .footer-col h4 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+        
+        .footer-col p, .footer-col a {
+            color: #bbb;
+            text-decoration: none;
+            line-height: 2;
+        }
+        
+        .footer-col a:hover {
+            color: #fff;
+        }
+        
+        .social-icons a {
+            color: #fff;
+            font-size: 1.5rem;
+            margin: 0 10px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            font-size: 0.9rem;
+            color: #888;
+        }
+
+
+        /* Responsive design */
+        @media (max-width: 992px) {
+            .hamburger {
+                display: block;
+            }
+
+            .nav-menu {
+                position: absolute;
+                top: 74px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 74px);
+                background-color: #fff;
+                transition: left 0.3s ease-in-out;
+            }
+            
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .nav-menu ul {
+                flex-direction: column;
+                align-items: flex-start;
+                padding-top: 20px;
+                width: 100%;
+            }
+
+            .nav-menu ul li {
+                width: 100%;
+                text-align: left;
+            }
+            
+            .nav-menu ul li a {
+                padding: 15px 20px;
+                width: 100%;
+                color: #333;
+            }
+            
+            .hero-section h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header class="header">
+        <div class="logo">
+            <a href="index.html">JLPT শিখুন</a>
+        </div>
+        <nav class="nav-menu">
+            <ul>
+                <li><a href="index.html">হোম</a></li>
+                <li><a href="blog.html">ব্লগ</a></li>
+                <li><a href="courses.html">কোর্স</a></li>
+                <li><a href="books.html">বই</a></li>
+                <li><a href="about.html">আমাদের সম্পর্কে</a></li>
+                <li><a href="contact.html">যোগাযোগ</a></li>
+                <li><a href="login.html">লগইন</a></li>
+            </ul>
+        </nav>
+        <div class="hamburger">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <h1>জাপানি ভাষা শেখা এখন আরও সহজ</h1>
+        <p>আমাদের কোর্স, বই এবং ব্লগের মাধ্যমে JLPT পরীক্ষার জন্য সেরা প্রস্তুতি নিন এবং আপনার স্বপ্ন পূরণ করুন।</p>
+        <a href="courses.html" class="hero-btn">আমাদের কোর্স দেখুন</a>
+    </section>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Latest Blogs Section -->
+        <section class="home-section">
+            <h2 class="section-title">সর্বশেষ ব্লগ পোস্ট</h2>
+            <div class="content-grid">
+                <!-- Blog Post 1 -->
+                <div class="card">
+                    <img src="https://placehold.co/600x400/55C595/FFFFFF?text=Blog+Post" alt="Blog Post Image">
+                    <div class="card-content">
+                        <h3>কাঞ্জি মনে রাখার সহজ উপায়</h3>
+                        <p>কাঞ্জি শেখা কঠিন মনে হতে পারে, কিন্তু কিছু কৌশল অবলম্বন করলে এটি অনেক সহজ হয়ে যায়।</p>
+                        <a href="#" class="card-btn">আরও পড়ুন</a>
+                    </div>
+                </div>
+                <!-- Blog Post 2 -->
+                <div class="card">
+                    <img src="https://placehold.co/600x400/3498DB/FFFFFF?text=Blog+Post" alt="Blog Post Image">
+                    <div class="card-content">
+                        <h3>JLPT N5 পরীক্ষার জন্য প্রস্তুতি</h3>
+                        <p>JLPT N5 হল জাপানি ভাষা দক্ষতার প্রথম ধাপ। এর জন্য কিভাবে প্রস্তুতি নিবেন তা জেনে নিন।</p>
+                        <a href="#" class="card-btn">আরও পড়ুন</a>
+                    </div>
+                </div>
+                <!-- Blog Post 3 -->
+                <div class="card">
+                    <img src="https://placehold.co/600x400/E74C3C/FFFFFF?text=Blog+Post" alt="Blog Post Image">
+                    <div class="card-content">
+                        <h3>জাপানের সংস্কৃতি ও শিষ্টাচার</h3>
+                        <p>জাপান ভ্রমণের আগে তাদের সংস্কৃতি এবং সামাজিক শিষ্টাচার সম্পর্কে জানা অত্যন্ত গুরুত্বপূর্ণ।</p>
+                        <a href="#" class="card-btn">আরও পড়ুন</a>
+                    </div>
+                </div>
+            </div>
+            <a href="blog.html" class="see-all-link">সব ব্লগ দেখুন &rarr;</a>
+        </section>
+
+        <!-- Books Section -->
+        <section class="home-section" style="background-color: #f9f9f9;">
+            <h2 class="section-title">আমাদের বইসমূহ</h2>
+            <div class="content-grid">
+                <!-- Book 1 -->
+                <div class="card">
+                    <img src="https://placehold.co/600x400/9B59B6/FFFFFF?text=Book" alt="Book Cover">
+                    <div class="card-content">
+                        <h3>Minna no Nihongo N5</h3>
+                        <p>N5 লেভেলের শিক্ষার্থীদের জন্য সর্বাধিক জনপ্রিয় এবং কার্যকরী একটি বই।</p>
+                        <a href="#" class="card-btn">বিস্তারিত দেখুন</a>
+                    </div>
+                </div>
+                <!-- Book 2 -->
+                <div class="card">
+                    <img src="https://placehold.co/600x400/F1C40F/FFFFFF?text=Book" alt="Book Cover">
+                    <div class="card-content">
+                        <h3>JLPT N4 Kanji Book</h3>
+                        <p>N4 লেভেলের জন্য প্রয়োজনীয় সকল কাঞ্জি অনুশীলন করার জন্য সেরা একটি বই।</p>
+                        <a href="#" class="card-btn">বিস্তারিত দেখুন</a>
+                    </div>
+                </div>
+                <!-- Book 3 -->
+                <div class="card">
+                    <img src="https://placehold.co/600x400/1ABC9C/FFFFFF?text=Book" alt="Book Cover">
+                    <div class="card-content">
+                        <h3>Complete Grammar Guide</h3>
+                        <p>JLPT পরীক্ষার সকল স্তরের গ্রামার সহজভাবে ব্যাখ্যা করা হয়েছে এই বইটিতে।</p>
+                        <a href="#" class="card-btn">বিস্তারিত দেখুন</a>
+                    </div>
+                </div>
+            </div>
+            <a href="books.html" class="see-all-link">সব বই দেখুন &rarr;</a>
+        </section>
+
+        <!-- Courses Section -->
+        <section class="home-section">
+            <h2 class="section-title">আমাদের কোর্সসমূহ</h2>
+            <div class="content-grid">
+                <!-- Course 1 -->
+                <div class="card">
+                    <img src="https://placehold.co/600x400/E67E22/FFFFFF?text=Course" alt="Course Thumbnail">
+                    <div class="card-content">
+                        <h3>JLPT N5 Full Course</h3>
+                        <p>যারা একদম শুরু থেকে জাপানি ভাষা শিখতে চান, তাদের জন্য এই কোর্সটি সেরা।</p>
+                        <a href="#" class="card-btn">কোর্সে যোগ দিন</a>
+                    </div>
+                </div>
+                <!-- Course 2 -->
+                <div class="card">
+                    <img src="https://placehold.co/600x400/34495E/FFFFFF?text=Course" alt="Course Thumbnail">
+                    <div class="card-content">
+                        <h3>JLPT N4 Conversation Course</h3>
+                        <p>জাপানি ভাষায় অনর্গল কথা বলার দক্ষতা অর্জনের জন্য এই কোর্সটি ডিজাইন করা হয়েছে।</p>
+                        <a href="#" class="card-btn">কোর্সে যোগ দিন</a>
+                    </div>
+                </div>
+                <!-- Course 3 -->
+                <div class="card">
+                    <img src="https://placehold.co/600x400/2ECC71/FFFFFF?text=Course" alt="Course Thumbnail">
+                    <div class="card-content">
+                        <h3>Advanced Kanji Masterclass</h3>
+                        <p>N3 থেকে N1 লেভেলের কঠিন কাঞ্জিগুলো সহজে আয়ত্ত করার জন্য বিশেষ কোর্স।</p>
+                        <a href="#" class="card-btn">কোর্সে যোগ দিন</a>
+                    </div>
+                </div>
+            </div>
+             <a href="courses.html" class="see-all-link">সব কোর্স দেখুন &rarr;</a>
+        </section>
+    </main>
+    
+    <!-- Footer Section -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>JLPT শিখুন</h4>
+                <p>জাপানি ভাষা শেখা এবং JLPT পরীক্ষার প্রস্তুতির জন্য আপনার বিশ্বস্ত সঙ্গী।</p>
+            </div>
+            <div class="footer-col">
+                <h4>গুরুত্বপূর্ণ লিংক</h4>
+                <p><a href="about.html">আমাদের সম্পর্কে</a></p>
+                <p><a href="contact.html">যোগাযোগ</a></p>
+                <p><a href="#">গোপনীয়তা নীতি</a></p>
+            </div>
+            <div class="footer-col">
+                <h4>সামাজিক মাধ্যম</h4>
+                <div class="social-icons">
+                    <a href="#">Fb</a>
+                    <a href="#">Yt</a>
+                    <a href="#">In</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; ২০২৫ JLPT শিখুন। সর্বস্বত্ব সংরক্ষিত।</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle er jonno JavaScript
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>আমাদের ব্লগ</title>
+    <style>
+        /* Google Fonts import korchi */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;700&display=swap');
+
+        /* Shob element er jonno basic styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans Bengali', sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        /* Header er style */
+        .header {
+            background-color: #fff;
+            padding: 0 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo a {
+            text-decoration: none;
+            color: #333;
+            font-size: 24px;
+            font-weight: bold;
+            padding: 15px 0;
+        }
+
+        .nav-menu ul {
+            list-style: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-menu ul li a {
+            display: flex;
+            align-items: center;
+            color: #333;
+            text-decoration: none;
+            padding: 25px 18px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-menu ul li a:hover {
+            color: #007BFF;
+        }
+        
+        /* Hamburger Menu (Mobile View) */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+
+        .hamburger .bar {
+            display: block;
+            width: 25px;
+            height: 3px;
+            margin: 5px auto;
+            background-color: #333;
+            transition: all 0.3s ease-in-out;
+        }
+        
+        /* Main Content Section */
+        .main-container {
+            padding: 40px 5%;
+        }
+        
+        .page-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            color: #333;
+        }
+
+        /* Blog Grid Styling */
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .blog-card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .blog-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+        }
+
+        .blog-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .blog-card-content {
+            padding: 20px;
+        }
+
+        .blog-card-content h3 {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+        }
+        
+        .blog-card-content .post-meta {
+            font-size: 0.8rem;
+            color: #777;
+            margin-bottom: 15px;
+        }
+
+        .blog-card-content p {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        .read-more-btn {
+            display: inline-block;
+            background-color: #007BFF;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .read-more-btn:hover {
+            background-color: #0056b3;
+        }
+        
+        /* Footer Styling */
+        .footer {
+            background-color: #222;
+            color: #ddd;
+            padding: 50px 5%;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            text-align: center;
+        }
+        
+        .footer-col h4 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+        
+        .footer-col p, .footer-col a {
+            color: #bbb;
+            text-decoration: none;
+            line-height: 2;
+        }
+        
+        .footer-col a:hover {
+            color: #fff;
+        }
+        
+        .social-icons a {
+            color: #fff;
+            font-size: 1.5rem;
+            margin: 0 10px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            font-size: 0.9rem;
+            color: #888;
+        }
+
+        /* Responsive design */
+        @media (max-width: 992px) {
+            .hamburger {
+                display: block;
+            }
+
+            .nav-menu {
+                position: absolute;
+                top: 74px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 74px);
+                background-color: #fff;
+                transition: left 0.3s ease-in-out;
+            }
+            
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .nav-menu ul {
+                flex-direction: column;
+                align-items: flex-start;
+                padding-top: 20px;
+                width: 100%;
+            }
+
+            .nav-menu ul li {
+                width: 100%;
+                text-align: left;
+            }
+            
+            .nav-menu ul li a {
+                padding: 15px 20px;
+                width: 100%;
+                color: #333;
+            }
+            
+            .page-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header class="header">
+        <div class="logo">
+            <a href="index.html">JLPT শিখুন</a>
+        </div>
+        <nav class="nav-menu">
+            <ul>
+                <li><a href="index.html">হোম</a></li>
+                <li><a href="blog.html">ব্লগ</a></li>
+                <li><a href="jlpt.html">JLPT/Nat</a></li>
+                <li><a href="courses.html">কোর্স</a></li>
+                <li><a href="books.html">বই</a></li>
+                <li><a href="about.html">আমাদের সম্পর্কে</a></li>
+                <li><a href="contact.html">যোগাযোগ</a></li>
+                <li><a href="login.html">লগইন</a></li>
+            </ul>
+        </nav>
+        <div class="hamburger">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-container">
+        <h1 class="page-title">আমাদের ব্লগ</h1>
+        <div class="blog-grid">
+            <!-- Blog Post 1 -->
+            <div class="blog-card">
+                <img src="https://placehold.co/600x400/55C595/FFFFFF?text=Post+1" alt="Blog Post Image 1">
+                <div class="blog-card-content">
+                    <h3>জাপানি ভাষায় দক্ষতার গুরুত্ব</h3>
+                    <div class="post-meta">জুলাই ১৩, ২০২৫</div>
+                    <p>জাপানি ভাষা শেখা আপনার ক্যারিয়ার এবং ব্যক্তিগত জীবনে নতুন দিগন্ত উন্মোচন করতে পারে।</p>
+                    <a href="#" class="read-more-btn">আরও পড়ুন</a>
+                </div>
+            </div>
+            <!-- Blog Post 2 -->
+            <div class="blog-card">
+                <img src="https://placehold.co/600x400/3498DB/FFFFFF?text=Post+2" alt="Blog Post Image 2">
+                <div class="blog-card-content">
+                    <h3>JLPT N5 পরীক্ষার জন্য প্রস্তুতি</h3>
+                    <div class="post-meta">জুলাই ১২, ২০২৫</div>
+                    <p>JLPT N5 হল জাপানি ভাষা দক্ষতার প্রথম ধাপ। এর জন্য কিভাবে প্রস্তুতি নিবেন তা জেনে নিন।</p>
+                    <a href="#" class="read-more-btn">আরও পড়ুন</a>
+                </div>
+            </div>
+            <!-- Blog Post 3 -->
+            <div class="blog-card">
+                <img src="https://placehold.co/600x400/E74C3C/FFFFFF?text=Post+3" alt="Blog Post Image 3">
+                <div class="blog-card-content">
+                    <h3>কাঞ্জি মনে রাখার সহজ উপায়</h3>
+                    <div class="post-meta">জুলাই ১১, ২০২৫</div>
+                    <p>কাঞ্জি শেখা কঠিন মনে হতে পারে, কিন্তু কিছু কৌশল অবলম্বন করলে এটি অনেক সহজ হয়ে যায়।</p>
+                    <a href="#" class="read-more-btn">আরও পড়ুন</a>
+                </div>
+            </div>
+            <!-- Blog Post 4 -->
+            <div class="blog-card">
+                <img src="https://placehold.co/600x400/F1C40F/FFFFFF?text=Post+4" alt="Blog Post Image 4">
+                <div class="blog-card-content">
+                    <h3>জাপানের সংস্কৃতি ও শিষ্টাচার</h3>
+                    <div class="post-meta">জুলাই ১০, ২০২৫</div>
+                    <p>জাপান ভ্রমণের আগে তাদের সংস্কৃতি এবং সামাজিক শিষ্টাচার সম্পর্কে জানা অত্যন্ত গুরুত্বপূর্ণ।</p>
+                    <a href="#" class="read-more-btn">আরও পড়ুন</a>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Footer Section -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>JLPT শিখুন</h4>
+                <p>জাপানি ভাষা শেখা এবং JLPT পরীক্ষার প্রস্তুতির জন্য আপনার বিশ্বস্ত সঙ্গী।</p>
+            </div>
+            <div class="footer-col">
+                <h4>গুরুত্বপূর্ণ লিংক</h4>
+                <p><a href="about.html">আমাদের সম্পর্কে</a></p>
+                <p><a href="contact.html">যোগাযোগ</a></p>
+                <p><a href="#">গোপনীয়তা নীতি</a></p>
+            </div>
+            <div class="footer-col">
+                <h4>সামাজিক মাধ্যম</h4>
+                <div class="social-icons">
+                    <a href="#">Fb</a>
+                    <a href="#">Yt</a>
+                    <a href="#">In</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; ২০২৫ JLPT শিখুন। সর্বস্বত্ব সংরক্ষিত।</p>
+        </div>
+    </footer>
+
+
+    <script>
+        // Mobile menu toggle er jonno JavaScript
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+    </script>
+
+</body>
+</html>
