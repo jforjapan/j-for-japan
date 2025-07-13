@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ব্যবহারকারী ম্যানেজমেন্ট - অ্যাডমিন ড্যাশবোর্ড</title>
+    <style>
+        /* Google Fonts import korchi */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;700&display=swap');
+
+        /* Basic Styling */
+        :root {
+            --primary-color: #007BFF;
+            --secondary-color: #6c757d;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --bg-color: #f4f7f6;
+            --sidebar-bg: #2c3e50;
+            --sidebar-text: #ecf0f1;
+            --sidebar-hover: #34495e;
+            --card-bg: #fff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans Bengali', sans-serif;
+            background-color: var(--bg-color);
+            color: #333;
+        }
+
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            width: 260px;
+            background-color: var(--sidebar-bg);
+            color: var(--sidebar-text);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            transition: width 0.3s;
+        }
+
+        .sidebar-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .sidebar-header .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--sidebar-text);
+            text-decoration: none;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar-menu a:hover, .sidebar-menu a.active {
+            background-color: var(--sidebar-hover);
+        }
+        
+        .sidebar-footer {
+            margin-top: auto;
+        }
+
+        /* Main Content Styling */
+        .main-content {
+            flex-grow: 1;
+            padding: 30px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 2rem;
+        }
+        
+        /* Users List Section */
+        .users-list-section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .users-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .users-table th, .users-table td {
+            padding: 15px;
+            text-align: left;
+            vertical-align: middle;
+        }
+        
+        .users-table thead {
+            background-color: #e9ecef;
+        }
+        
+        .users-table tbody tr:not(:last-child) {
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            color: #fff;
+        }
+        
+        .status-badge.active { background-color: var(--success-color); }
+        .status-badge.blocked { background-color: var(--danger-color); }
+        
+        .action-btn {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+
+        .block-btn { background-color: var(--warning-color); color: #333; }
+        .delete-btn { background-color: var(--danger-color); }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+             .users-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-container {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                height: auto;
+                flex-direction: row;
+                justify-content: space-around;
+            }
+            .sidebar-header, .sidebar-footer {
+                display: none;
+            }
+            .sidebar-menu {
+                display: flex;
+                overflow-x: auto;
+            }
+            .sidebar-menu a {
+                margin: 0 5px;
+                flex-shrink: 0;
+            }
+            .sidebar-menu span {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="index.html" class="logo">JLPT শিখুন</a>
+            </div>
+            <nav class="sidebar-menu">
+                <a href="dashboard.html">📊 <span>ড্যাশবোর্ড</span></a>
+                <a href="admin-blog.html">📝 <span>ব্লগ পোস্ট</span></a>
+                <a href="admin-books.html">📚 <span>বই ম্যানেজ</span></a>
+                <a href="admin-courses.html">🎓 <span>কোর্স ম্যানেজ</span></a>
+                <a href="admin-orders.html">🧾 <span>অর্ডারস</span></a>
+                <a href="admin-users.html" class="active">👥 <span>ব্যবহারকারী</span></a>
+                <a href="admin-settings.html">⚙️ <span>সেটিংস</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="login.html">🚪 <span>লগআউট</span></a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <h1>ব্যবহারকারী ম্যানেজমেন্ট</h1>
+            </header>
+
+            <section class="users-list-section">
+                <h2>সকল ব্যবহারকারী</h2>
+                <table class="users-table">
+                    <thead>
+                        <tr>
+                            <th>ব্যবহারকারীর আইডি</th>
+                            <th>ইমেইল</th>
+                            <th>রেজিস্ট্রেশনের তারিখ</th>
+                            <th>স্ট্যাটাস</th>
+                            <th>অ্যাকশন</th>
+                        </tr>
+                    </thead>
+                    <tbody id="users-table-body">
+                        <!-- Real-time data will be inserted here by JavaScript -->
+                         <tr>
+                            <td colspan="5" style="text-align:center;">লোড হচ্ছে...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, onSnapshot, deleteDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyBVBKn61vskBCIHr0T_sYBO_T4LIAYX7U4",
+          authDomain: "jforjapan-9a71b.firebaseapp.com",
+          projectId: "jforjapan-9a71b",
+          storageBucket: "jforjapan-9a71b.appspot.com",
+          messagingSenderId: "268240545851",
+          appId: "1:268240545851:web:b9165f4ac5d1af25a9541e",
+          measurementId: "G-03618TQH5P"
+        };
+
+        const appId = 'jforjapan-9a71b'; // Using your project ID as appId
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        try {
+            if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                await signInWithCustomToken(auth, __initial_auth_token);
+            } else {
+                await signInAnonymously(auth);
+            }
+        } catch (error) {
+            console.error("Authentication Error:", error);
+            alert("Firebase Authentication Error!\n\nApnar file upload kaj korar jonno, nicher kajti korte hobe:\n\n1. Apnar Firebase Project-e jaan.\n2. Bam diker menu theke 'Build' -> 'Authentication'-e click korun.\n3. 'Sign-in method' tab-e click korun.\n4. List theke 'Anonymous' select korun ebong 'Enable' kore 'Save' korun.\n\nEi kajti korle apnar problem solve hoye jabe.");
+        }
+        
+        const usersCollection = collection(db, `/artifacts/${appId}/public/data/users`);
+        const usersTableBody = document.getElementById('users-table-body');
+
+        // Display all users in real-time
+        onSnapshot(usersCollection, (snapshot) => {
+            usersTableBody.innerHTML = '';
+            if (snapshot.empty) {
+                usersTableBody.innerHTML = '<tr><td colspan="5" style="text-align:center;">কোনো ব্যবহারকারী পাওয়া যায়নি।</td></tr>';
+                return;
+            }
+            snapshot.forEach(doc => {
+                const user = doc.data();
+                const registrationDate = user.createdAt ? user.createdAt.toDate().toLocaleDateString('bn-BD') : 'N/A';
+                const userStatus = user.status || 'active';
+                const row = `
+                    <tr>
+                        <td>#${doc.id.substring(0, 6)}</td>
+                        <td>${user.email || 'N/A'}</td>
+                        <td>${registrationDate}</td>
+                        <td><span class="status-badge ${userStatus}">${userStatus}</span></td>
+                        <td>
+                            <button class="action-btn block-btn" data-id="${doc.id}" data-status="${userStatus}">
+                                ${userStatus === 'active' ? 'Block' : 'Unblock'}
+                            </button>
+                            <button class="action-btn delete-btn" data-id="${doc.id}">ডিলিট</button>
+                        </td>
+                    </tr>
+                `;
+                usersTableBody.innerHTML += row;
+            });
+        });
+
+        // Handle action button clicks
+        usersTableBody.addEventListener('click', async (e) => {
+            const target = e.target;
+            const userId = target.dataset.id;
+
+            if (!userId) return;
+
+            // Handle Block/Unblock
+            if (target.classList.contains('block-btn')) {
+                const currentStatus = target.dataset.status;
+                const newStatus = currentStatus === 'active' ? 'blocked' : 'active';
+                const userDocRef = doc(db, `/artifacts/${appId}/public/data/users`, userId);
+                try {
+                    await updateDoc(userDocRef, { status: newStatus });
+                    alert(`ব্যবহারকারীকে সফলভাবে ${newStatus} করা হয়েছে।`);
+                } catch (error) {
+                    console.error("Error updating user status: ", error);
+                    alert('স্ট্যাটাস আপডেট করা যায়নি।');
+                }
+            }
+
+            // Handle Delete
+            if (target.classList.contains('delete-btn')) {
+                if (confirm('আপনি কি নিশ্চিতভাবে এই ব্যবহারকারীকে ডিলিট করতে চান? এটি ফেরত আনা যাবে না।')) {
+                    try {
+                        await deleteDoc(doc(db, `/artifacts/${appId}/public/data/users`, userId));
+                        alert('ব্যবহারকারীকে সফলভাবে ডিলিট করা হয়েছে।');
+                    } catch (error) {
+                        console.error("Error removing user: ", error);
+                        alert('ব্যবহারকারীকে ডিলিট করা যায়নি।');
+                    }
+                }
+            }
+        });
+
+    </script>
+</body>
+</html>

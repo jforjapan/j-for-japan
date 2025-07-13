@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ব্লগ ম্যানেজমেন্ট - অ্যাডমিন ড্যাশবোর্ড</title>
+    <style>
+        /* Google Fonts import korchi */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;700&display=swap');
+
+        /* Basic Styling */
+        :root {
+            --primary-color: #007BFF;
+            --secondary-color: #6c757d;
+            --danger-color: #dc3545;
+            --bg-color: #f4f7f6;
+            --sidebar-bg: #2c3e50;
+            --sidebar-text: #ecf0f1;
+            --sidebar-hover: #34495e;
+            --card-bg: #fff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans Bengali', sans-serif;
+            background-color: var(--bg-color);
+            color: #333;
+        }
+
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            width: 260px;
+            background-color: var(--sidebar-bg);
+            color: var(--sidebar-text);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            transition: width 0.3s;
+        }
+
+        .sidebar-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .sidebar-header .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--sidebar-text);
+            text-decoration: none;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar-menu a:hover, .sidebar-menu a.active {
+            background-color: var(--sidebar-hover);
+        }
+        
+        .sidebar-footer {
+            margin-top: auto;
+        }
+
+        /* Main Content Styling */
+        .main-content {
+            flex-grow: 1;
+            padding: 30px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 2rem;
+        }
+        
+        /* Form Section */
+        .form-section {
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+        
+        .form-section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-family: 'Noto Sans Bengali', sans-serif;
+        }
+        
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        /* Custom File Upload Button */
+        .file-upload-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            width: 100%;
+        }
+        .file-upload-wrapper input[type=file] {
+            font-size: 100px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+        .file-upload-btn {
+            border: 1px solid #ddd;
+            color: #555;
+            background-color: white;
+            padding: 12px;
+            border-radius: 5px;
+            display: block;
+            width: 100%;
+            text-align: left;
+        }
+        #file-name {
+            margin-top: 10px;
+            font-style: italic;
+            color: #555;
+        }
+
+        .submit-btn {
+            background-color: var(--primary-color);
+            color: #fff;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .submit-btn:hover {
+            background-color: #0056b3;
+        }
+        
+        /* Posts List Section */
+        .posts-list-section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .posts-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .posts-table th, .posts-table td {
+            padding: 15px;
+            text-align: left;
+        }
+        
+        .posts-table thead {
+            background-color: #e9ecef;
+        }
+        
+        .posts-table tbody tr:not(:last-child) {
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .action-btn {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+        
+        .edit-btn { background-color: var(--secondary-color); }
+        .delete-btn { background-color: var(--danger-color); }
+        
+        #form-status {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .dashboard-container {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                height: auto;
+                flex-direction: row;
+                justify-content: space-around;
+            }
+            .sidebar-header, .sidebar-footer {
+                display: none;
+            }
+            .sidebar-menu {
+                display: flex;
+                overflow-x: auto;
+            }
+            .sidebar-menu a {
+                margin: 0 5px;
+                flex-shrink: 0;
+            }
+            .sidebar-menu span {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="index.html" class="logo">JLPT শিখুন</a>
+            </div>
+            <nav class="sidebar-menu">
+                <a href="dashboard.html">📊 <span>ড্যাশবোর্ড</span></a>
+                <a href="admin-blog.html" class="active">📝 <span>ব্লগ পোস্ট</span></a>
+                <a href="admin-books.html">📚 <span>বই ম্যানেজ</span></a>
+                <a href="admin-courses.html">🎓 <span>কোর্স ম্যানেজ</span></a>
+                <a href="admin-orders.html">🧾 <span>অর্ডারস</span></a>
+                <a href="admin-users.html">👥 <span>ব্যবহারকারী</span></a>
+                <a href="admin-settings.html">⚙️ <span>সেটিংস</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="login.html">🚪 <span>লগআউট</span></a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <h1>ব্লগ ম্যানেজমেন্ট</h1>
+            </header>
+
+            <section class="form-section">
+                <h2>নতুন পোস্ট তৈরি করুন</h2>
+                <form id="add-post-form">
+                    <div class="form-group">
+                        <label for="post-title">শিরোনাম</label>
+                        <input type="text" id="post-title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="post-author">লেখকের নাম</label>
+                        <input type="text" id="post-author" required>
+                    </div>
+                     <div class="form-group">
+                        <label for="post-image">পোস্টের ছবি</label>
+                        <div class="file-upload-wrapper">
+                            <button type="button" class="file-upload-btn">ছবি নির্বাচন করুন</button>
+                            <input type="file" id="post-image" accept="image/*" required>
+                        </div>
+                        <div id="file-name">কোনো ফাইল নির্বাচন করা হয়নি</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="post-content">মূল লেখা</label>
+                        <textarea id="post-content" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">পোস্ট পাবলিশ করুন</button>
+                    <p id="form-status"></p>
+                </form>
+            </section>
+
+            <section class="posts-list-section">
+                <h2>সকল পোস্ট</h2>
+                <table class="posts-table">
+                    <thead>
+                        <tr>
+                            <th>শিরোনাম</th>
+                            <th>লেখক</th>
+                            <th>প্রকাশের তারিখ</th>
+                            <th>অ্যাকশন</th>
+                        </tr>
+                    </thead>
+                    <tbody id="posts-table-body">
+                        <!-- Real-time data will be inserted here by JavaScript -->
+                         <tr>
+                            <td colspan="4" style="text-align:center;">লোড হচ্ছে...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-storage.js";
+
+        const firebaseConfig = typeof __firebase_config !== 'undefined' 
+            ? JSON.parse(__firebase_config) 
+            : { apiKey: "DEMO_API_KEY", authDomain: "DEMO_AUTH_DOMAIN", projectId: "DEMO_PROJECT_ID" };
+
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const storage = getStorage(app);
+
+        try {
+            if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                await signInWithCustomToken(auth, __initial_auth_token);
+            } else {
+                await signInAnonymously(auth);
+            }
+        } catch (error) {
+            console.error("Authentication Error:", error);
+        }
+        
+        const blogPostsCollection = collection(db, `/artifacts/${appId}/public/data/blogPosts`);
+        const addPostForm = document.getElementById('add-post-form');
+        const formStatus = document.getElementById('form-status');
+        const fileInput = document.getElementById('post-image');
+        const fileNameDisplay = document.getElementById('file-name');
+
+        fileInput.addEventListener('change', () => {
+            if (fileInput.files.length > 0) {
+                fileNameDisplay.textContent = fileInput.files[0].name;
+            } else {
+                fileNameDisplay.textContent = 'কোনো ফাইল নির্বাচন করা হয়নি';
+            }
+        });
+
+        // Add new blog post
+        addPostForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const imageFile = fileInput.files[0];
+            if (!imageFile) {
+                alert("অনুগ্রহ করে একটি ছবি নির্বাচন করুন।");
+                return;
+            }
+
+            formStatus.textContent = 'ছবি আপলোড করা হচ্ছে...';
+            formStatus.style.color = 'blue';
+
+            try {
+                // Upload image to Firebase Storage
+                const storageRef = ref(storage, `blog-images/${Date.now()}-${imageFile.name}`);
+                const snapshot = await uploadBytes(storageRef, imageFile);
+                const downloadURL = await getDownloadURL(snapshot.ref);
+
+                formStatus.textContent = 'পোস্ট করা হচ্ছে...';
+
+                await addDoc(blogPostsCollection, {
+                    title: document.getElementById('post-title').value,
+                    content: document.getElementById('post-content').value,
+                    imageUrl: downloadURL,
+                    author: document.getElementById('post-author').value,
+                    createdAt: serverTimestamp()
+                });
+
+                formStatus.textContent = 'পোস্ট সফলভাবে পাবলিশ হয়েছে!';
+                formStatus.style.color = 'green';
+                addPostForm.reset();
+                fileNameDisplay.textContent = 'কোনো ফাইল নির্বাচন করা হয়নি';
+
+            } catch (error) {
+                console.error("Error adding document: ", error);
+                formStatus.textContent = 'পোস্ট পাবলিশ করা যায়নি। অনুগ্রহ করে আবার চেষ্টা করুন।';
+                formStatus.style.color = 'red';
+            }
+            setTimeout(() => formStatus.textContent = '', 4000);
+        });
+
+        // Display all blog posts in real-time
+        const postsTableBody = document.getElementById('posts-table-body');
+        onSnapshot(blogPostsCollection, (snapshot) => {
+            postsTableBody.innerHTML = '';
+            if (snapshot.empty) {
+                postsTableBody.innerHTML = '<tr><td colspan="4" style="text-align:center;">কোনো পোস্ট পাওয়া যায়নি।</td></tr>';
+                return;
+            }
+            snapshot.forEach(doc => {
+                const post = doc.data();
+                const postDate = post.createdAt ? post.createdAt.toDate().toLocaleDateString('bn-BD') : 'N/A';
+                const row = `
+                    <tr>
+                        <td>${post.title}</td>
+                        <td>${post.author}</td>
+                        <td>${postDate}</td>
+                        <td>
+                            <button class="action-btn edit-btn" data-id="${doc.id}">এডিট</button>
+                            <button class="action-btn delete-btn" data-id="${doc.id}">ডিলিট</button>
+                        </td>
+                    </tr>
+                `;
+                postsTableBody.innerHTML += row;
+            });
+        });
+
+        // Handle delete button click
+        postsTableBody.addEventListener('click', async (e) => {
+            if (e.target.classList.contains('delete-btn')) {
+                const postId = e.target.dataset.id;
+                if (confirm('আপনি কি নিশ্চিতভাবে এই পোস্টটি ডিলিট করতে চান?')) {
+                    try {
+                        await deleteDoc(doc(db, `/artifacts/${appId}/public/data/blogPosts`, postId));
+                        alert('পোস্ট সফলভাবে ডিলিট করা হয়েছে।');
+                    } catch (error) {
+                        console.error("Error removing document: ", error);
+                        alert('পোস্ট ডিলিট করা যায়নি।');
+                    }
+                }
+            }
+            if (e.target.classList.contains('edit-btn')) {
+                alert('এডিট ফিচারটি শীঘ্রই আসছে!');
+            }
+        });
+
+    </script>
+</body>
+</html>

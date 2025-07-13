@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Add Course</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <section class="form-box">
+    <h2>Add Course</h2>
+    <form action="#" method="post" enctype="multipart/form-data">
+      <label>Course Title</label>
+      <input type="text" name="title" required>
+
+      <label>Course Thumbnail</label>
+      <input type="file" name="image" accept="image/*">
+
+      <label>Course Link (YouTube / Google Drive)</label>
+      <input type="url" name="courselink">
+
+      <label>Description</label>
+      <textarea name="description" rows="6"></textarea>
+
+      <button type="submit">Add Course</button>
+    </form>
+  </section>
+</body>
+</html>

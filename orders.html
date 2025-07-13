@@ -1,0 +1,39 @@
+<tbody id="orderTableBody">
+  <!-- Orders will be loaded by JS -->
+</tbody>
+
+<script>
+  const stored = JSON.parse(localStorage.getItem("orders") || "[]");
+  const tbody = document.getElementById("orderTableBody");
+
+  if (stored.length === 0) {
+    tbody.innerHTML = "<tr><td colspan='6'>No orders found</td></tr>";
+  }
+
+  stored.forEach((order, index) => {
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td>${index + 1}</td>
+      <td>${order.email}</td>
+      <td>${order.trxid}</td>
+      <td>${order.product}</td>
+      <td><span class="status">${order.status}</span></td>
+      <td>
+        <button onclick="updateStatus(this, ${order.id}, 'Confirmed')">✅ Confirm</button>
+        <button onclick="updateStatus(this, ${order.id}, 'Canceled')">❌ Cancel</button>
+      </td>
+    `;
+    tbody.appendChild(row);
+  });
+
+  function updateStatus(btn, id, statusText) {
+    const orders = JSON.parse(localStorage.getItem("orders"));
+    const index = orders.findIndex(o => o.id === id);
+    if (index !== -1) {
+      orders[index].status = statusText;
+      localStorage.setItem("orders", JSON.stringify(orders));
+      btn.parentElement.previousElementSibling.querySelector(".status").textContent = statusText;
+      btn.parentElement.previousElementSibling.querySelector(".status").style.color = statusText === "Confirmed" ? "green" : "red";
+    }
+  }
+</script>

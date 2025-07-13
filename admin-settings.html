@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>সেটিংস - অ্যাডমিন ড্যাশবোর্ড</title>
+    <style>
+        /* Google Fonts import korchi */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;700&display=swap');
+
+        /* Basic Styling */
+        :root {
+            --primary-color: #007BFF;
+            --secondary-color: #6c757d;
+            --danger-color: #dc3545;
+            --bg-color: #f4f7f6;
+            --sidebar-bg: #2c3e50;
+            --sidebar-text: #ecf0f1;
+            --sidebar-hover: #34495e;
+            --card-bg: #fff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans Bengali', sans-serif;
+            background-color: var(--bg-color);
+            color: #333;
+        }
+
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            width: 260px;
+            background-color: var(--sidebar-bg);
+            color: var(--sidebar-text);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            transition: width 0.3s;
+        }
+
+        .sidebar-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .sidebar-header .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--sidebar-text);
+            text-decoration: none;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar-menu a:hover, .sidebar-menu a.active {
+            background-color: var(--sidebar-hover);
+        }
+        
+        .sidebar-footer {
+            margin-top: auto;
+        }
+
+        /* Main Content Styling */
+        .main-content {
+            flex-grow: 1;
+            padding: 30px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 2rem;
+        }
+        
+        /* Settings Section */
+        .settings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+        }
+
+        .settings-card {
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .settings-card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-family: 'Noto Sans Bengali', sans-serif;
+        }
+
+        .submit-btn {
+            background-color: var(--primary-color);
+            color: #fff;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .submit-btn:hover {
+            background-color: #0056b3;
+        }
+        
+        .status-message {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .dashboard-container {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                height: auto;
+                flex-direction: row;
+                justify-content: space-around;
+            }
+            .sidebar-header, .sidebar-footer {
+                display: none;
+            }
+            .sidebar-menu {
+                display: flex;
+                overflow-x: auto;
+            }
+            .sidebar-menu a {
+                margin: 0 5px;
+                flex-shrink: 0;
+            }
+            .sidebar-menu span {
+                display: none;
+            }
+            .settings-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="index.html" class="logo">JLPT শিখুন</a>
+            </div>
+            <nav class="sidebar-menu">
+                <a href="dashboard.html">📊 <span>ড্যাশবোর্ড</span></a>
+                <a href="admin-blog.html">📝 <span>ব্লগ পোস্ট</span></a>
+                <a href="admin-books.html">📚 <span>বই ম্যানেজ</span></a>
+                <a href="admin-courses.html">🎓 <span>কোর্স ম্যানেজ</span></a>
+                <a href="admin-orders.html">🧾 <span>অর্ডারস</span></a>
+                <a href="admin-users.html">👥 <span>ব্যবহারকারী</span></a>
+                <a href="admin-settings.html" class="active">⚙️ <span>সেটিংস</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="login.html">🚪 <span>লগআউট</span></a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <h1>সেটিংস</h1>
+            </header>
+
+            <div class="settings-grid">
+                <!-- General Settings Card -->
+                <div class="settings-card">
+                    <h2>সাধারণ সেটিংস</h2>
+                    <form id="general-settings-form">
+                        <div class="form-group">
+                            <label for="website-title">ওয়েবসাইটের শিরোনাম</label>
+                            <input type="text" id="website-title">
+                        </div>
+                        <button type="submit" class="submit-btn">সেভ করুন</button>
+                        <p class="status-message" id="general-status"></p>
+                    </form>
+                </div>
+
+                <!-- Payment Settings Card -->
+                <div class="settings-card">
+                    <h2>পেমেন্ট সেটিংস</h2>
+                    <form id="payment-settings-form">
+                        <div class="form-group">
+                            <label for="bkash-number">বিকাশ নম্বর</label>
+                            <input type="text" id="bkash-number">
+                        </div>
+                        <div class="form-group">
+                            <label for="nagad-number">নগদ নম্বর</label>
+                            <input type="text" id="nagad-number">
+                        </div>
+                        <button type="submit" class="submit-btn">সেভ করুন</button>
+                        <p class="status-message" id="payment-status"></p>
+                    </form>
+                </div>
+
+                <!-- Password Change Card -->
+                <div class="settings-card">
+                    <h2>পাসওয়ার্ড পরিবর্তন</h2>
+                    <form id="password-change-form">
+                        <div class="form-group">
+                            <label for="current-password">বর্তমান পাসওয়ার্ড</label>
+                            <input type="password" id="current-password" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="new-password">নতুন পাসওয়ার্ড</label>
+                            <input type="password" id="new-password" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirm-password">নতুন পাসওয়ার্ড নিশ্চিত করুন</label>
+                            <input type="password" id="confirm-password" required>
+                        </div>
+                        <button type="submit" class="submit-btn">পাসওয়ার্ড পরিবর্তন করুন</button>
+                        <p class="status-message" id="password-status"></p>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, updatePassword, reauthenticateWithCredential, EmailAuthProvider } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyBVBKn61vskBCIHr0T_sYBO_T4LIAYX7U4",
+          authDomain: "jforjapan-9a71b.firebaseapp.com",
+          projectId: "jforjapan-9a71b",
+          storageBucket: "jforjapan-9a71b.appspot.com",
+          messagingSenderId: "268240545851",
+          appId: "1:268240545851:web:b9165f4ac5d1af25a9541e",
+          measurementId: "G-03618TQH5P"
+        };
+
+        // Correctly use the appId from the environment when available
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'jforjapan-9a71b';
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        let currentUser = null;
+
+        try {
+            if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                await signInWithCustomToken(auth, __initial_auth_token);
+                currentUser = auth.currentUser;
+            } else {
+                await signInAnonymously(auth);
+                currentUser = auth.currentUser;
+            }
+        } catch (error) {
+            console.error("Authentication Error:", error);
+            if (error.code === 'auth/custom-token-mismatch') {
+                 alert("Firebase Authentication Error: Custom Token Mismatch.\n\nCanvas environment ebong apnar Firebase project ID-r moddhe mil na thakle ei error-ti hoy. Apnar `firebaseConfig`-e deya `projectId` sothik ache kina, ta nishchit korun.");
+            } else if (error.code === 'auth/configuration-not-found'){
+                 alert("Firebase Authentication Error!\n\nApnar file upload kaj korar jonno, nicher kajti korte hobe:\n\n1. Apnar Firebase Project-e jaan.\n2. Bam diker menu theke 'Build' -> 'Authentication'-e click korun.\n3. 'Sign-in method' tab-e click korun.\n4. List theke 'Anonymous' select korun ebong 'Enable' kore 'Save' korun.\n\nEi kajti korle apnar problem solve hoye jabe.");
+            } else {
+                 alert("An unknown authentication error occurred. Please check the console for more details.");
+            }
+        }
+        
+        const settingsDocRef = doc(db, `/artifacts/${appId}/public/data/settings/mainSettings`);
+
+        // Load existing settings
+        async function loadSettings() {
+            try {
+                const docSnap = await getDoc(settingsDocRef);
+                if (docSnap.exists()) {
+                    const settings = docSnap.data();
+                    document.getElementById('website-title').value = settings.websiteTitle || '';
+                    document.getElementById('bkash-number').value = settings.bkashNumber || '';
+                    document.getElementById('nagad-number').value = settings.nagadNumber || '';
+                }
+            } catch (error) {
+                console.error("Error loading settings:", error);
+            }
+        }
+        loadSettings();
+
+        // General Settings Form
+        document.getElementById('general-settings-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const statusEl = document.getElementById('general-status');
+            const newTitle = document.getElementById('website-title').value;
+
+            statusEl.textContent = 'সেভ করা হচ্ছে...';
+            statusEl.style.color = 'blue';
+
+            try {
+                await setDoc(settingsDocRef, { websiteTitle: newTitle }, { merge: true });
+                statusEl.textContent = 'সফলভাবে সেভ হয়েছে!';
+                statusEl.style.color = 'green';
+            } catch (error) {
+                statusEl.textContent = 'সেভ করা যায়নি।';
+                statusEl.style.color = 'red';
+            }
+             setTimeout(() => statusEl.textContent = '', 3000);
+        });
+
+        // Payment Settings Form
+        document.getElementById('payment-settings-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const statusEl = document.getElementById('payment-status');
+            const bkash = document.getElementById('bkash-number').value;
+            const nagad = document.getElementById('nagad-number').value;
+
+            statusEl.textContent = 'সেভ করা হচ্ছে...';
+            statusEl.style.color = 'blue';
+
+            try {
+                await setDoc(settingsDocRef, { bkashNumber: bkash, nagadNumber: nagad }, { merge: true });
+                statusEl.textContent = 'সফলভাবে সেভ হয়েছে!';
+                statusEl.style.color = 'green';
+            } catch (error) {
+                statusEl.textContent = 'সেভ করা যায়নি।';
+                statusEl.style.color = 'red';
+            }
+             setTimeout(() => statusEl.textContent = '', 3000);
+        });
+        
+        // Password Change Form
+        document.getElementById('password-change-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const statusEl = document.getElementById('password-status');
+            const currentPassword = document.getElementById('current-password').value;
+            const newPassword = document.getElementById('new-password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+
+            if (newPassword !== confirmPassword) {
+                statusEl.textContent = 'নতুন পাসওয়ার্ড দুটি মেলেনি।';
+                statusEl.style.color = 'red';
+                return;
+            }
+            
+            if (!currentUser || currentUser.isAnonymous) {
+                 statusEl.textContent = 'পাসওয়ার্ড পরিবর্তনের জন্য আপনাকে ইমেইল দিয়ে লগইন করতে হবে।';
+                 statusEl.style.color = 'red';
+                 return;
+            }
+
+            statusEl.textContent = 'পাসওয়ার্ড পরিবর্তন করা হচ্ছে...';
+            statusEl.style.color = 'blue';
+            
+            try {
+                const credential = EmailAuthProvider.credential(currentUser.email, currentPassword);
+                await reauthenticateWithCredential(currentUser, credential);
+                await updatePassword(currentUser, newPassword);
+                statusEl.textContent = 'পাসওয়ার্ড সফলভাবে পরিবর্তন হয়েছে!';
+                statusEl.style.color = 'green';
+                document.getElementById('password-change-form').reset();
+            } catch (error) {
+                console.error("Password change error:", error);
+                statusEl.textContent = 'পাসওয়ার্ড পরিবর্তন করা যায়নি। বর্তমান পাসওয়ার্ড সঠিক কিনা তা পরীক্ষা করুন।';
+                statusEl.style.color = 'red';
+            }
+            setTimeout(() => statusEl.textContent = '', 5000);
+        });
+
+    </script>
+</body>
+</html>

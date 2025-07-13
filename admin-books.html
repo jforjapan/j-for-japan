@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>বই ম্যানেজমেন্ট - অ্যাডমিন ড্যাশবোর্ড</title>
+    <style>
+        /* Google Fonts import korchi */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;700&display=swap');
+
+        /* Basic Styling */
+        :root {
+            --primary-color: #007BFF;
+            --secondary-color: #6c757d;
+            --danger-color: #dc3545;
+            --bg-color: #f4f7f6;
+            --sidebar-bg: #2c3e50;
+            --sidebar-text: #ecf0f1;
+            --sidebar-hover: #34495e;
+            --card-bg: #fff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans Bengali', sans-serif;
+            background-color: var(--bg-color);
+            color: #333;
+        }
+
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            width: 260px;
+            background-color: var(--sidebar-bg);
+            color: var(--sidebar-text);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            transition: width 0.3s;
+        }
+
+        .sidebar-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .sidebar-header .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--sidebar-text);
+            text-decoration: none;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar-menu a:hover, .sidebar-menu a.active {
+            background-color: var(--sidebar-hover);
+        }
+        
+        .sidebar-footer {
+            margin-top: auto;
+        }
+
+        /* Main Content Styling */
+        .main-content {
+            flex-grow: 1;
+            padding: 30px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 2rem;
+        }
+        
+        /* Form Section */
+        .form-section {
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+        
+        .form-section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-family: 'Noto Sans Bengali', sans-serif;
+        }
+        
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+        
+        /* Custom File Upload Button */
+        .file-upload-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            width: 100%;
+        }
+        .file-upload-wrapper input[type=file] {
+            font-size: 100px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+        .file-upload-btn {
+            border: 1px solid #ddd;
+            color: #555;
+            background-color: white;
+            padding: 12px;
+            border-radius: 5px;
+            display: block;
+            width: 100%;
+            text-align: left;
+        }
+        .file-name {
+            margin-top: 10px;
+            font-style: italic;
+            color: #555;
+        }
+
+
+        .submit-btn {
+            background-color: var(--primary-color);
+            color: #fff;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .submit-btn:hover {
+            background-color: #0056b3;
+        }
+        
+        /* Books List Section */
+        .books-list-section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .books-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .books-table th, .books-table td {
+            padding: 15px;
+            text-align: left;
+        }
+        
+        .books-table thead {
+            background-color: #e9ecef;
+        }
+        
+        .books-table tbody tr:not(:last-child) {
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .action-btn {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+        
+        .edit-btn { background-color: var(--secondary-color); }
+        .delete-btn { background-color: var(--danger-color); }
+        
+        #form-status {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .dashboard-container {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                height: auto;
+                flex-direction: row;
+                justify-content: space-around;
+            }
+            .sidebar-header, .sidebar-footer {
+                display: none;
+            }
+            .sidebar-menu {
+                display: flex;
+                overflow-x: auto;
+            }
+            .sidebar-menu a {
+                margin: 0 5px;
+                flex-shrink: 0;
+            }
+            .sidebar-menu span {
+                display: none;
+            }
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="index.html" class="logo">JLPT শিখুন</a>
+            </div>
+            <nav class="sidebar-menu">
+                <a href="dashboard.html">📊 <span>ড্যাশবোর্ড</span></a>
+                <a href="admin-blog.html">📝 <span>ব্লগ পোস্ট</span></a>
+                <a href="admin-books.html" class="active">📚 <span>বই ম্যানেজ</span></a>
+                <a href="admin-courses.html">🎓 <span>কোর্স ম্যানেজ</span></a>
+                <a href="admin-orders.html">🧾 <span>অর্ডারস</span></a>
+                <a href="admin-users.html">👥 <span>ব্যবহারকারী</span></a>
+                <a href="admin-settings.html">⚙️ <span>সেটিংস</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="login.html">🚪 <span>লগআউট</span></a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <h1>বই ম্যানেজমেন্ট</h1>
+            </header>
+
+            <section class="form-section">
+                <h2>নতুন বই যুক্ত করুন</h2>
+                <form id="add-book-form">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="book-title">বইয়ের শিরোনাম</label>
+                            <input type="text" id="book-title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="book-author">লেখকের নাম</label>
+                            <input type="text" id="book-author" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="book-level">লেভেল</label>
+                            <select id="book-level" required>
+                                <option value="n5">N5</option>
+                                <option value="n4">N4</option>
+                                <option value="n3">N3</option>
+                                <option value="n2">N2</option>
+                                <option value="n1">N1</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="book-category">ক্যাটাগরি</label>
+                            <select id="book-category" required>
+                                <option value="grammar">Grammar</option>
+                                <option value="reading">Reading</option>
+                                <option value="listening">Listening</option>
+                                <option value="kanji">Kanji</option>
+                                <option value="vocabulary">Vocabulary</option>
+                                <option value="question">Question Paper</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="book-type">বইয়ের ধরণ</label>
+                            <select id="book-type" required>
+                                <option value="paid">Paid</option>
+                                <option value="free">Free</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="price-group">
+                            <label for="book-price">মূল্য (৳)</label>
+                            <input type="number" id="book-price" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="book-image">বইয়ের কভার ছবি</label>
+                            <div class="file-upload-wrapper">
+                                <button type="button" class="file-upload-btn">ছবি নির্বাচন করুন</button>
+                                <input type="file" id="book-image" accept="image/*" required>
+                            </div>
+                            <div class="file-name" id="image-file-name">কোনো ফাইল নির্বাচন করা হয়নি</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="book-pdf">বইয়ের PDF ফাইল</label>
+                             <div class="file-upload-wrapper">
+                                <button type="button" class="file-upload-btn">PDF নির্বাচন করুন</button>
+                                <input type="file" id="book-pdf" accept=".pdf" required>
+                            </div>
+                            <div class="file-name" id="pdf-file-name">কোনো ফাইল নির্বাচন করা হয়নি</div>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="book-description">বিবরণ</label>
+                            <textarea id="book-description" required></textarea>
+                        </div>
+                    </div>
+                    <button type="submit" class="submit-btn">বই যুক্ত করুন</button>
+                    <p id="form-status"></p>
+                </form>
+            </section>
+
+            <section class="books-list-section">
+                <h2>সকল বই</h2>
+                <table class="books-table">
+                    <thead>
+                        <tr>
+                            <th>শিরোনাম</th>
+                            <th>লেখক</th>
+                            <th>লেভেল</th>
+                            <th>ধরণ</th>
+                            <th>মূল্য</th>
+                            <th>অ্যাকশন</th>
+                        </tr>
+                    </thead>
+                    <tbody id="books-table-body">
+                        <!-- Real-time data will be inserted here by JavaScript -->
+                         <tr>
+                            <td colspan="6" style="text-align:center;">লোড হচ্ছে...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-storage.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyBVBKn61vskBCIHr0T_sYBO_T4LIAYX7U4",
+          authDomain: "jforjapan-9a71b.firebaseapp.com",
+          projectId: "jforjapan-9a71b",
+          storageBucket: "jforjapan-9a71b.appspot.com",
+          messagingSenderId: "268240545851",
+          appId: "1:268240545851:web:b9165f4ac5d1af25a9541e",
+          measurementId: "G-03618TQH5P"
+        };
+
+        const appId = 'jforjapan-9a71b'; // Using your project ID as appId
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const storage = getStorage(app);
+
+        try {
+            // Check if the special token for Canvas environment is available
+            if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                await signInWithCustomToken(auth, __initial_auth_token);
+            } else {
+                // Fallback to anonymous sign-in for local development
+                await signInAnonymously(auth);
+            }
+        } catch (error) {
+            console.error("Authentication Error:", error);
+            // This alert helps the user diagnose the problem.
+            // The most common issue is not enabling the Authentication method in the Firebase console.
+            alert("Authentication Failed! Please make sure you have enabled 'Anonymous' sign-in method in your Firebase project's Authentication settings. Go to Firebase Console -> Build -> Authentication -> Sign-in method.");
+        }
+        
+        const booksCollection = collection(db, `/artifacts/${appId}/public/data/books`);
+        const addBookForm = document.getElementById('add-book-form');
+        const formStatus = document.getElementById('form-status');
+        
+        const imageFileInput = document.getElementById('book-image');
+        const pdfFileInput = document.getElementById('book-pdf');
+        const imageFileNameDisplay = document.getElementById('image-file-name');
+        const pdfFileNameDisplay = document.getElementById('pdf-file-name');
+        
+        const bookTypeSelect = document.getElementById('book-type');
+        const priceGroup = document.getElementById('price-group');
+        const priceInput = document.getElementById('book-price');
+
+        // Show/hide price field based on book type
+        bookTypeSelect.addEventListener('change', (e) => {
+            if (e.target.value === 'free') {
+                priceGroup.style.display = 'none';
+                priceInput.required = false;
+            } else {
+                priceGroup.style.display = 'block';
+                priceInput.required = true;
+            }
+        });
+
+        imageFileInput.addEventListener('change', () => {
+            imageFileNameDisplay.textContent = imageFileInput.files.length > 0 ? imageFileInput.files[0].name : 'কোনো ফাইল নির্বাচন করা হয়নি';
+        });
+        pdfFileInput.addEventListener('change', () => {
+            pdfFileNameDisplay.textContent = pdfFileInput.files.length > 0 ? pdfFileInput.files[0].name : 'কোনো ফাইল নির্বাচন করা হয়নি';
+        });
+
+        // Add new book
+        addBookForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const imageFile = imageFileInput.files[0];
+            const pdfFile = pdfFileInput.files[0];
+
+            if (!imageFile || !pdfFile) {
+                alert("অনুগ্রহ করে কভার ছবি এবং PDF ফাইল উভয়ই নির্বাচন করুন।");
+                return;
+            }
+            
+            const bookType = bookTypeSelect.value;
+            if (bookType === 'paid' && !priceInput.value) {
+                alert("Paid বইয়ের জন্য মূল্য নির্ধারণ করা আবশ্যক।");
+                return;
+            }
+
+            formStatus.textContent = 'ফাইল আপলোড করা হচ্ছে...';
+            formStatus.style.color = 'blue';
+
+            try {
+                // 1. Upload image
+                const imageStorageRef = ref(storage, `book-covers/${Date.now()}-${imageFile.name}`);
+                const imageSnapshot = await uploadBytes(imageStorageRef, imageFile);
+                const imageDownloadURL = await getDownloadURL(imageSnapshot.ref);
+
+                // 2. Upload PDF
+                const pdfStorageRef = ref(storage, `book-pdfs/${Date.now()}-${pdfFile.name}`);
+                const pdfSnapshot = await uploadBytes(pdfStorageRef, pdfFile);
+                const pdfDownloadURL = await getDownloadURL(pdfSnapshot.ref);
+
+                formStatus.textContent = 'বই যুক্ত করা হচ্ছে...';
+
+                // 3. Add book data to Firestore
+                await addDoc(booksCollection, {
+                    title: document.getElementById('book-title').value,
+                    author: document.getElementById('book-author').value,
+                    level: document.getElementById('book-level').value,
+                    category: document.getElementById('book-category').value,
+                    bookType: bookType,
+                    price: bookType === 'paid' ? Number(priceInput.value) : 0,
+                    imageUrl: imageDownloadURL,
+                    pdfUrl: pdfDownloadURL,
+                    description: document.getElementById('book-description').value,
+                    createdAt: serverTimestamp()
+                });
+
+                formStatus.textContent = 'বই সফলভাবে যুক্ত হয়েছে!';
+                formStatus.style.color = 'green';
+                addBookForm.reset();
+                imageFileNameDisplay.textContent = 'কোনো ফাইল নির্বাচন করা হয়নি';
+                pdfFileNameDisplay.textContent = 'কোনো ফাইল নির্বাচন করা হয়নি';
+                priceGroup.style.display = 'block';
+
+            } catch (error) {
+                console.error("Error adding document: ", error);
+                formStatus.textContent = 'বই যুক্ত করা যায়নি। অনুগ্রহ করে আবার চেষ্টা করুন।';
+                formStatus.style.color = 'red';
+            }
+            setTimeout(() => formStatus.textContent = '', 4000);
+        });
+
+        // Display all books in real-time
+        const booksTableBody = document.getElementById('books-table-body');
+        onSnapshot(booksCollection, (snapshot) => {
+            booksTableBody.innerHTML = '';
+            if (snapshot.empty) {
+                booksTableBody.innerHTML = '<tr><td colspan="6" style="text-align:center;">কোনো বই পাওয়া যায়নি।</td></tr>';
+                return;
+            }
+            snapshot.forEach(doc => {
+                const book = doc.data();
+                const row = `
+                    <tr>
+                        <td>${book.title}</td>
+                        <td>${book.author}</td>
+                        <td>${book.level.toUpperCase()}</td>
+                        <td>${book.bookType === 'free' ? 'Free' : 'Paid'}</td>
+                        <td>৳${book.price}</td>
+                        <td>
+                            <button class="action-btn edit-btn" data-id="${doc.id}">এডিট</button>
+                            <button class="action-btn delete-btn" data-id="${doc.id}">ডিলিট</button>
+                        </td>
+                    </tr>
+                `;
+                booksTableBody.innerHTML += row;
+            });
+        });
+
+        // Handle delete button click
+        booksTableBody.addEventListener('click', async (e) => {
+            if (e.target.classList.contains('delete-btn')) {
+                const bookId = e.target.dataset.id;
+                if (confirm('আপনি কি নিশ্চিতভাবে এই বইটি ডিলিট করতে চান?')) {
+                    try {
+                        await deleteDoc(doc(db, `/artifacts/${appId}/public/data/books`, bookId));
+                        alert('বই সফলভাবে ডিলিট করা হয়েছে।');
+                    } catch (error) {
+                        console.error("Error removing document: ", error);
+                        alert('বই ডিলিট করা যায়নি।');
+                    }
+                }
+            }
+            if (e.target.classList.contains('edit-btn')) {
+                alert('এডিট ফিচারটি শীঘ্রই আসছে!');
+            }
+        });
+
+    </script>
+</body>
+</html>

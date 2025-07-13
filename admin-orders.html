@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>অর্ডার ম্যানেজমেন্ট - অ্যাডমিন ড্যাশবোর্ড</title>
+    <style>
+        /* Google Fonts import korchi */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;700&display=swap');
+
+        /* Basic Styling */
+        :root {
+            --primary-color: #007BFF;
+            --secondary-color: #6c757d;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --bg-color: #f4f7f6;
+            --sidebar-bg: #2c3e50;
+            --sidebar-text: #ecf0f1;
+            --sidebar-hover: #34495e;
+            --card-bg: #fff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans Bengali', sans-serif;
+            background-color: var(--bg-color);
+            color: #333;
+        }
+
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            width: 260px;
+            background-color: var(--sidebar-bg);
+            color: var(--sidebar-text);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            transition: width 0.3s;
+        }
+
+        .sidebar-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .sidebar-header .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--sidebar-text);
+            text-decoration: none;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar-menu a:hover, .sidebar-menu a.active {
+            background-color: var(--sidebar-hover);
+        }
+        
+        .sidebar-footer {
+            margin-top: auto;
+        }
+
+        /* Main Content Styling */
+        .main-content {
+            flex-grow: 1;
+            padding: 30px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 2rem;
+        }
+        
+        /* Orders List Section */
+        .orders-list-section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .orders-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .orders-table th, .orders-table td {
+            padding: 15px;
+            text-align: left;
+            vertical-align: middle;
+        }
+        
+        .orders-table thead {
+            background-color: #e9ecef;
+        }
+        
+        .orders-table tbody tr:not(:last-child) {
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .status-select {
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            background-color: #fff;
+        }
+        
+        .status-select.pending { border-color: var(--warning-color); color: var(--warning-color); }
+        .status-select.completed { border-color: var(--success-color); color: var(--success-color); }
+        .status-select.cancelled { border-color: var(--danger-color); color: var(--danger-color); }
+
+        .delete-btn {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            cursor: pointer;
+            background-color: var(--danger-color);
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+             .orders-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-container {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                height: auto;
+                flex-direction: row;
+                justify-content: space-around;
+            }
+            .sidebar-header, .sidebar-footer {
+                display: none;
+            }
+            .sidebar-menu {
+                display: flex;
+                overflow-x: auto;
+            }
+            .sidebar-menu a {
+                margin: 0 5px;
+                flex-shrink: 0;
+            }
+            .sidebar-menu span {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="index.html" class="logo">JLPT শিখুন</a>
+            </div>
+            <nav class="sidebar-menu">
+                <a href="dashboard.html">📊 <span>ড্যাশবোর্ড</span></a>
+                <a href="admin-blog.html">📝 <span>ব্লগ পোস্ট</span></a>
+                <a href="admin-books.html">📚 <span>বই ম্যানেজ</span></a>
+                <a href="admin-courses.html">🎓 <span>কোর্স ম্যানেজ</span></a>
+                <a href="admin-orders.html" class="active">🧾 <span>অর্ডারস</span></a>
+                <a href="admin-users.html">👥 <span>ব্যবহারকারী</span></a>
+                <a href="admin-settings.html">⚙️ <span>সেটিংস</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="login.html">🚪 <span>লগআউট</span></a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <h1>অর্ডার ম্যানেজমেন্ট</h1>
+            </header>
+
+            <section class="orders-list-section">
+                <h2>সকল অর্ডার</h2>
+                <table class="orders-table">
+                    <thead>
+                        <tr>
+                            <th>অর্ডার আইডি</th>
+                            <th>গ্রাহকের ইমেইল</th>
+                            <th>Transaction ID</th>
+                            <th>তারিখ</th>
+                            <th>স্ট্যাটাস</th>
+                            <th>অ্যাকশন</th>
+                        </tr>
+                    </thead>
+                    <tbody id="orders-table-body">
+                        <!-- Real-time data will be inserted here by JavaScript -->
+                         <tr>
+                            <td colspan="6" style="text-align:center;">লোড হচ্ছে...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, onSnapshot, deleteDoc, doc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyBVBKn61vskBCIHr0T_sYBO_T4LIAYX7U4",
+          authDomain: "jforjapan-9a71b.firebaseapp.com",
+          projectId: "jforjapan-9a71b",
+          storageBucket: "jforjapan-9a71b.appspot.com",
+          messagingSenderId: "268240545851",
+          appId: "1:268240545851:web:b9165f4ac5d1af25a9541e",
+          measurementId: "G-03618TQH5P"
+        };
+
+        const appId = 'jforjapan-9a71b'; // Using your project ID as appId
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        try {
+            if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                await signInWithCustomToken(auth, __initial_auth_token);
+            } else {
+                await signInAnonymously(auth);
+            }
+        } catch (error) {
+            console.error("Authentication Error:", error);
+            alert("Firebase Authentication Error!\n\nApnar file upload kaj korar jonno, nicher kajti korte hobe:\n\n1. Apnar Firebase Project-e jaan.\n2. Bam diker menu theke 'Build' -> 'Authentication'-e click korun.\n3. 'Sign-in method' tab-e click korun.\n4. List theke 'Anonymous' select korun ebong 'Enable' kore 'Save' korun.\n\nEi kajti korle apnar problem solve hoye jabe.");
+        }
+        
+        const ordersCollection = collection(db, `/artifacts/${appId}/public/data/orders`);
+        const ordersTableBody = document.getElementById('orders-table-body');
+
+        // Display all orders in real-time
+        onSnapshot(ordersCollection, (snapshot) => {
+            ordersTableBody.innerHTML = '';
+            if (snapshot.empty) {
+                ordersTableBody.innerHTML = '<tr><td colspan="6" style="text-align:center;">কোনো অর্ডার পাওয়া যায়নি।</td></tr>';
+                return;
+            }
+            snapshot.forEach(doc => {
+                const order = doc.data();
+                const orderDate = order.createdAt ? order.createdAt.toDate().toLocaleDateString('bn-BD') : 'N/A';
+                const row = `
+                    <tr>
+                        <td>#${doc.id.substring(0, 6)}</td>
+                        <td>${order.email || 'N/A'}</td>
+                        <td>${order.transactionId || 'N/A'}</td>
+                        <td>${orderDate}</td>
+                        <td>
+                            <select class="status-select ${order.status}" data-id="${doc.id}">
+                                <option value="pending" ${order.status === 'pending' ? 'selected' : ''}>Pending</option>
+                                <option value="completed" ${order.status === 'completed' ? 'selected' : ''}>Completed</option>
+                                <option value="cancelled" ${order.status === 'cancelled' ? 'selected' : ''}>Cancelled</option>
+                            </select>
+                        </td>
+                        <td>
+                            <button class="delete-btn" data-id="${doc.id}">ডিলিট</button>
+                        </td>
+                    </tr>
+                `;
+                ordersTableBody.innerHTML += row;
+            });
+        });
+
+        // Handle status change and delete button click
+        ordersTableBody.addEventListener('change', async (e) => {
+            if (e.target.classList.contains('status-select')) {
+                const orderId = e.target.dataset.id;
+                const newStatus = e.target.value;
+                const orderDocRef = doc(db, `/artifacts/${appId}/public/data/orders`, orderId);
+                try {
+                    await updateDoc(orderDocRef, { status: newStatus });
+                    // Optional: show a success message
+                } catch (error) {
+                    console.error("Error updating status: ", error);
+                    alert('স্ট্যাটাস আপডেট করা যায়নি।');
+                }
+            }
+        });
+
+        ordersTableBody.addEventListener('click', async (e) => {
+            if (e.target.classList.contains('delete-btn')) {
+                const orderId = e.target.dataset.id;
+                if (confirm('আপনি কি নিশ্চিতভাবে এই অর্ডারটি ডিলিট করতে চান?')) {
+                    try {
+                        await deleteDoc(doc(db, `/artifacts/${appId}/public/data/orders`, orderId));
+                        alert('অর্ডার সফলভাবে ডিলিট করা হয়েছে।');
+                    } catch (error) {
+                        console.error("Error removing document: ", error);
+                        alert('অর্ডার ডিলিট করা যায়নি।');
+                    }
+                }
+            }
+        });
+
+    </script>
+</body>
+</html>
